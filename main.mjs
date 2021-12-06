@@ -8,7 +8,7 @@ ctx.canvas.width = ctx.canvas.clientWidth;
 ctx.canvas.height = ctx.canvas.clientHeight;
 
 let bigCircle = new Particle({ x: ctx.canvas.width / 2, y: ctx.canvas.height - 30, r: 30 });
-let smallCircle = new Particle({ x: ctx.canvas.width / 2, y: ctx.canvas.height - 10, r: 10, color:"orange", speed: 0.04});
+let smallCircle = new Particle({ x: ctx.canvas.width / 2, y: ctx.canvas.height - 10, r: 10, color:"orange", speed: 0.04 / 3});
 
 bigCircle.setTopLimit(ctx.canvas.height * 1 / 4)
 smallCircle.setTopLimit(ctx.canvas.height * 3 / 4)
@@ -27,12 +27,15 @@ let keyboard = new Keyboard
 
 
 MainLoop.setUpdate(dt => {
-    if(keyboard.isKeysDown('KeyA')){
-    smallCircle.applyOrbitalPath();
-    bigCircle.applyOrbitalPath();
+    if(keyboard.isKeysDown('Space')){     
+    smallCircle.isActivated = true; 
+    bigCircle.isActivated = true;   
+    } else {
+      smallCircle.isActivated = false; 
+      bigCircle.isActivated = false; 
+    }
     smallCircle.move(dt);
     bigCircle.move(dt)
-    }
 })
 
 MainLoop.setDraw(() => {

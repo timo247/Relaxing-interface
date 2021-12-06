@@ -9,6 +9,7 @@ export default class Particle {
       this.dir = dir; // radian
       this.topLimit = topLimit
       this.bottomLimit = bottomLimit
+      this.isActivated = false;
     }
   
     getRadius() {
@@ -52,15 +53,37 @@ export default class Particle {
 
     }
 
+
+    toggleDirection(){
+      this.dir = -1 * this.dir;
+    }
+
+    applyPath(){
+      if (this.y - this.r < this.topLimit) {
+        if(this.isActivated){
+          this.speed = 0;
+        } else {
+          this.dir = -1 * this.dir
+        }
+      } else if (this.y + this.r > this.bottomLimit){
+        if(this.isActivated){
+          this.speed = 0;
+        } else {
+          this.dir = -1 * this.dir
+        }
+      }
+    }
+    /*
     applyOrbitalPath(){
       if (this.y - this.r < this.topLimit) {
         this.dir = -1 * this.dir;
         console.log("2")
       }
-      if (this.y + this.r > this.bottomLimit) {
+      else if (this.y + this.r > this.bottomLimit) {
         this.dir = -1 * this.dir;
         console.log("2", this)
       }
     }
+    */
   
   }

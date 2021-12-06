@@ -9,6 +9,7 @@ export default class Keyboard {
     #onKeyDown(evt) {
       let key = evt.code;
       this.keysPressed.add(key);
+      console.log(evt);
     }
   
     #onKeyUp(evt) {
