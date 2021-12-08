@@ -1,6 +1,6 @@
 export default class Particle {
 
-    constructor({x = 0, y = 0, r = 10, speed = 0.12, dir = Math.PI / -2, color = 'blue', topLimit = 100, bottomLimit = 400} = {}) {
+    constructor({x = 0, y = 0, r = 10, speed = 0.12, dir = Math.PI / 2, color = 'blue', topLimit = 100, bottomLimit = 400} = {}) {
       this.x = x;
       this.y = y;
       this.r = r;
@@ -51,6 +51,20 @@ export default class Particle {
       this.x += distX;
       this.y += distY;
 
+    }
+
+    moveUp(dt){
+      //const distX = this.speed * deltaT * Math.cos(Math.PI / -2);
+      const distY = this.speed * dt * Math.sin(Math.PI / -2);
+      //this.x += distX;
+      this.y += distY;
+    }
+
+    moveDown(dt){
+      //const distX = this.speed * deltaT * Math.cos(Math.PI / -2);
+      const distY = this.speed * dt * Math.sin(Math.PI / 2);
+      //this.x += distX;
+      this.y += distY;
     }
 
 

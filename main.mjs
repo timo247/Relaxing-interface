@@ -16,6 +16,8 @@ smallCircle.setTopLimit(ctx.canvas.height * 3 / 4)
 bigCircle.setBottomLimit(ctx.canvas.height)
 smallCircle.setBottomLimit(ctx.canvas.height)
 
+
+let particles = [bigCircle, smallCircle];
 //background
 let montagnes = new Image ();
 montagnes.src = "../visuels/montagnes.svg"
@@ -27,15 +29,25 @@ let keyboard = new Keyboard
 
 
 MainLoop.setUpdate(dt => {
-    if(keyboard.isKeysDown('Space')){     
-    smallCircle.isActivated = true; 
-    bigCircle.isActivated = true;   
-    } else {
-      smallCircle.isActivated = false; 
-      bigCircle.isActivated = false; 
+
+   console.log("dt1", dt)
+    if(keyboard.isKeyDown("Space")){
+      if(smallCircle.y - smallCircle.r < smallCircle.topLimit || bigCircle.y - bigCircle.r < bigCircle.topLimit){
+        return
+      } else {
+      smallCircle.moveUp(dt); 
+      bigCircle.moveUp(dt);
+      }
     }
-    smallCircle.move(dt);
-    bigCircle.move(dt)
+            
+    if(keyboard.isKeyUp("Space"))
+      if(smallCircle.y + smallCircle.r > smallCircle.bottomLimit || bigCircle.y + bigCircle.r > bigCircle.bottomLimit  ){
+        return
+      }else{
+        smallCircle.moveDown(dt);
+        bigCircle.moveDown(dt);
+      }      
+    
 })
 
 MainLoop.setDraw(() => {
