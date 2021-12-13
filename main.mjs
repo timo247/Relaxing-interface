@@ -1,7 +1,10 @@
+//régler héritage de propriétés de bubble
+
 import MainLoop from '../lib/Mainloop.js';
 import Particle from '../Class/Particle.mjs'
 import Keyboard from './Keyboard.js';
 import { getRandomInt } from '../lib/math.js';
+import Buble from './Class/Bubble.mjs';
 
 const ctx = document.querySelector('canvas').getContext('2d');
 ctx.canvas.width = ctx.canvas.clientWidth;
@@ -19,23 +22,36 @@ smallCircle.setBottomLimit(ctx.canvas.height)
 
 let particles = [bigCircle, smallCircle];
 //background
-let montagnes = new Image ();
-montagnes.src = "../visuels/montagnes.svg"
+let background = new Image (ctx.canvas.width);
+background.src = "../visuels/winter-mountain.svg"
+let widthDif = ctx.canvas.width - background.width
+console.log(widthDif)
+console.log(background)
 
 let keyboard = new Keyboard
 
 
+let buble = new Buble({ctx : ctx})
+console.log(buble)
 
+let bubles = []
+for (let index = 0; index < 30; index++) {
+  let buble = new Buble();
+  bubles.push(buble); 
+  console.log(bubles); 
+}
 
 
 MainLoop.setUpdate(dt => {
 
-   console.log("dt1", dt)
     if(keyboard.isKeyDown("Space")){
       if(smallCircle.y - smallCircle.r < smallCircle.topLimit || bigCircle.y - bigCircle.r < bigCircle.topLimit){
         return
       } else {
-      smallCircle.moveUp(dt); 
+      smallCircle.moveUp(dt);     
+      for (let i = 0; i < bubles.length; i ++){
+        bubles[i].move(dt)
+      }
       bigCircle.moveUp(dt);
       }
     }
@@ -46,6 +62,7 @@ MainLoop.setUpdate(dt => {
       }else{
         smallCircle.moveDown(dt);
         bigCircle.moveDown(dt);
+        
       }      
     
 })
@@ -55,8 +72,12 @@ MainLoop.setDraw(() => {
     ctx.canvas.height = ctx.canvas.clientHeight;
     bigCircle.draw(ctx)
     smallCircle.draw(ctx);
+    bubles.forEach(buble => {
+        buble.draw(ctx)
+    });
 
-    //ctx.drawImage(montagnes, 0, 24, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
+
+
     
   })
 
